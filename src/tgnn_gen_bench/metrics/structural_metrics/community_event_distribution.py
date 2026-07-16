@@ -25,6 +25,8 @@ CATEGORY = MetricCategory.STRUCTURAL_METRICS
 
 
 class CommunityEventDistribution(Metric[Graph, list[float]]):
+    """Measure how community transition events are distributed."""
+
     name = "community_event_distribution"
     category = CATEGORY
 
@@ -36,6 +38,7 @@ class CommunityEventDistribution(Metric[Graph, list[float]]):
         resolution: float = 1.0,
         seed: int = 42,
     ) -> None:
+        """Configure snapshotting and community matching settings."""
         self.snapshot = snapshot
         self.weight_index = weight_index
         self.overlap_threshold = overlap_threshold
@@ -43,6 +46,7 @@ class CommunityEventDistribution(Metric[Graph, list[float]]):
         self.seed = seed
 
     def compute(self, graph: Graph) -> list[float]:
+        """Compute the aggregate distribution of community events."""
         snapshots = build_snapshot_graphs(
             graph,
             snapshot=self.snapshot,

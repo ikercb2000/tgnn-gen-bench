@@ -18,6 +18,8 @@ CATEGORY = MetricCategory.STRUCTURAL_METRICS
 
 
 class ModularityTrajectory(Metric[Graph, list[float]]):
+    """Track snapshot modularity through time."""
+
     name = "modularity_trajectory"
     category = CATEGORY
 
@@ -28,12 +30,14 @@ class ModularityTrajectory(Metric[Graph, list[float]]):
         resolution: float = 1.0,
         seed: int = 42,
     ) -> None:
+        """Configure snapshotting and Louvain parameters."""
         self.snapshot = snapshot
         self.weight_index = weight_index
         self.resolution = resolution
         self.seed = seed
 
     def compute(self, graph: Graph) -> list[float]:
+        """Compute one modularity value per snapshot."""
         values: list[float] = []
         snapshots = build_snapshot_graphs(
             graph,

@@ -1,12 +1,4 @@
-"""Figure conventions, in one place.
-
-Mirrors the plotting style guide. Scripts import from here rather than
-re-declaring constants, so a change lands once instead of drifting per script.
-
-Target medium: NeurIPS text block 5.5 x 9 in, body 10 pt. Author every figure at
-the width it will occupy on the page and place it with width=f\\linewidth, so
-the render scale is 1 and fonts land at the size set here.
-"""
+"""Shared plotting style constants and helpers."""
 
 # import packages
 
@@ -92,13 +84,7 @@ USETEX_RC = {
 
 
 def apply_style(usetex: bool = True, dpi: int = DPI) -> bool:
-    """Apply the conventions. Returns whether usetex is actually in effect.
-
-    shutil.which('latex') only proves latex is installed; a render can still
-    fail on a missing package and matplotlib then falls back silently, giving
-    sans-serif figures that look styled but are not. So probe with a real
-    render and catch the exception.
-    """
+    """Apply plotting defaults and report whether LaTeX is active."""
     plt.rcParams.update(BASE_RC)
     plt.rcParams["figure.dpi"] = dpi
     if not usetex:
@@ -117,11 +103,7 @@ def apply_style(usetex: bool = True, dpi: int = DPI) -> bool:
 
 
 def save(fig, out, dpi: int = DPI) -> None:
-    """Save PNG and PDF from the same figure.
-
-    Never bbox_inches='tight': it re-crops after layout, so the saved figure is
-    not the width it was authored at and the placed scale is no longer 1.
-    """
+    """Save a figure as both PNG and PDF."""
     for ext in ("png", "pdf"):
         fig.savefig(f"{out}.{ext}", dpi=dpi)
 

@@ -20,6 +20,8 @@ TemporalGraphData = DGData
 
 @dataclass(frozen=True, slots=True)
 class TemporalEdge:
+    """Represent one temporal interaction with optional attributes."""
+
     source: Node
     target: Node
     timestamp: int

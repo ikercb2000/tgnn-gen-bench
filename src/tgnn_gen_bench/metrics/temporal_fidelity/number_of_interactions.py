@@ -27,9 +27,11 @@ class NumberOfInteractions(Metric[Graph, list[int]]):
     category = CATEGORY
 
     def __init__(self, snapshot: str | TimeDeltaDG | None = None) -> None:
+        """Choose the snapshot scale used for counting."""
         self.snapshot = snapshot
 
     def compute(self, graph: Graph) -> list[int]:
+        """Count interactions in each snapshot."""
         index, total = snapshots(graph, self.snapshot)
         return torch.bincount(index, minlength=total).tolist()
 

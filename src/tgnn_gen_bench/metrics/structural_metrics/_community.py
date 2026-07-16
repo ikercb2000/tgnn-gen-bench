@@ -16,6 +16,7 @@ def detect_communities(
     seed: int = 42,
     weight: str = "weight",
 ) -> list[set[int]]:
+    """Detect communities in one snapshot graph."""
     if graph.number_of_nodes() == 0:
         return []
 
@@ -38,6 +39,7 @@ def snapshot_louvain_modularity(
     seed: int = 42,
     weight: str = "weight",
 ) -> tuple[float, list[set[int]]]:
+    """Compute Louvain modularity and its detected communities."""
     communities = detect_communities(
         graph,
         resolution=resolution,
@@ -65,6 +67,7 @@ def community_transition_statistics(
     seed: int = 42,
     weight: str = "weight",
 ) -> dict[str, object]:
+    """Summarize community births, deaths, merges, and splits."""
     communities_t = detect_communities(
         graph_t,
         resolution=resolution,
@@ -101,6 +104,7 @@ def community_transition_statistics(
 
 
 def community_event_distribution(statistics: dict[str, object]) -> np.ndarray:
+    """Normalize community event counts into a distribution."""
     counts = np.asarray(
         [
             statistics["births"],
@@ -119,6 +123,7 @@ def community_overlap_matrix(
     communities_t: list[set[int]],
     communities_t1: list[set[int]],
 ) -> np.ndarray:
+    """Compute pairwise Jaccard overlaps between communities."""
     matrix = np.zeros((len(communities_t), len(communities_t1)), dtype=float)
     for row, community_t in enumerate(communities_t):
         for column, community_t1 in enumerate(communities_t1):
@@ -127,6 +132,7 @@ def community_overlap_matrix(
 
 
 def match_communities(overlap: np.ndarray) -> list[tuple[int, int, float]]:
+    """Match communities across snapshots by maximum overlap."""
     if overlap.size == 0:
         return []
 
@@ -138,6 +144,7 @@ def match_communities(overlap: np.ndarray) -> list[tuple[int, int, float]]:
 
 
 def jaccard_similarity(set_a: set[int], set_b: set[int]) -> float:
+    """Compute the Jaccard similarity between two node sets."""
     union = set_a | set_b
     if not union:
         return 0.0

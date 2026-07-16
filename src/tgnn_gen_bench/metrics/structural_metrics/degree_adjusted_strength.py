@@ -20,6 +20,8 @@ CATEGORY = MetricCategory.STRUCTURAL_METRICS
 
 
 class DegreeAdjustedStrength(Metric[Graph, list[float]]):
+    """Measure strengths after adjusting for node degree."""
+
     name = "degree_adjusted_strength"
     category = CATEGORY
 
@@ -29,11 +31,13 @@ class DegreeAdjustedStrength(Metric[Graph, list[float]]):
         weight_index: int = 0,
         eps: float = 1e-12,
     ) -> None:
+        """Configure snapshotting and numerical stabilization."""
         self.snapshot = snapshot
         self.weight_index = weight_index
         self.eps = eps
 
     def compute(self, graph: Graph) -> list[float]:
+        """Compute degree-adjusted strengths across all snapshots."""
         values: list[float] = []
         snapshots = build_snapshot_graphs(
             graph,

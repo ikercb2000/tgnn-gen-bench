@@ -17,6 +17,7 @@ def entropy_signature(
     stay_probability: float,
     seed: int,
 ) -> np.ndarray:
+    """Estimate entropy curves from repeated temporal random walks."""
     if not 0.0 <= stay_probability <= 1.0:
         raise ValueError("stay_probability must lie in [0, 1].")
     if n_walks < 1:
@@ -68,6 +69,7 @@ def simulate_temporal_random_walk(
     stay_probability: float,
     seed: int,
 ) -> np.ndarray:
+    """Simulate several random walks over successive snapshots."""
     rng = np.random.default_rng(seed)
     current_nodes = np.full(n_walks, start_node, dtype=np.int64)
     positions = np.empty((n_walks, horizon), dtype=np.int64)

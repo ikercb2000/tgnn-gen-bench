@@ -31,10 +31,12 @@ class DurationOfContacts(Metric[Graph, list[float]]):
         snapshot: str | TimeDeltaDG | None = None,
         directed: bool = False,
     ) -> None:
+        """Choose the snapshot scale and edge direction rule."""
         self.snapshot = snapshot
         self.directed = directed
 
     def compute(self, graph: Graph) -> list[float]:
+        """Compute mean contact duration for each observed pair."""
         _, lengths, pair, _ = contact_runs(graph, self.snapshot, self.directed)
         if lengths.numel() == 0:
             return []

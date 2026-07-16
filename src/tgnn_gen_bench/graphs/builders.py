@@ -30,6 +30,7 @@ def from_raw(
     node_type: Tensor | None = None,
     device: str | torch.device = "cpu",
 ) -> DGraph:
+    """Build a `DGraph` directly from raw TGM tensors."""
     data = DGData.from_raw(
         edge_time=edge_time,
         edge_index=edge_index,
@@ -56,6 +57,7 @@ def from_temporal_edges(
     time_delta: TimeDeltaDG | str = "s",
     device: str | torch.device = "cpu",
 ) -> DGraph:
+    """Build a `DGraph` from a sequence of temporal edges."""
     if not edges:
         raise ValueError("at least one temporal edge is required to build a DGraph")
 
@@ -78,6 +80,7 @@ def from_temporal_edges(
 # private helpers
 
 def _infer_feature_keys(edges: Sequence[TemporalEdge]) -> list[str]:
+    """Collect and sort attribute keys present in the input edges."""
     keys: set[str] = set()
     for edge in edges:
         if edge.attributes is not None:
@@ -89,6 +92,7 @@ def _build_edge_features(
     edges: Sequence[TemporalEdge],
     feature_keys: Sequence[str],
 ) -> Tensor | None:
+    """Convert numeric edge attributes into an edge feature matrix."""
     if not feature_keys:
         return None
 

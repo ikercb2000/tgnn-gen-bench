@@ -15,13 +15,17 @@ CATEGORY = MetricCategory.GLOBAL_METRICS
 
 
 class TemporalClosenessCentrality(Metric[Graph, list[float]]):
+    """Measure how quickly each node can reach others over time."""
+
     name = "temporal_closeness_centrality"
     category = CATEGORY
 
     def __init__(self, strict: bool = True) -> None:
+        """Choose whether simultaneous events can chain together."""
         self.strict = strict
 
     def compute(self, graph: Graph) -> list[float]:
+        """Compute temporal closeness values for every node."""
         return temporal_closeness_values(graph, strict=self.strict).tolist()
 
 

@@ -22,14 +22,18 @@ CATEGORY = MetricCategory.GLOBAL_METRICS
 
 
 class WindowedReachability(Metric[Graph, list[float]]):
+    """Measure reachability independently inside each snapshot window."""
+
     name = "windowed_reachability"
     category = CATEGORY
 
     def __init__(self, snapshot: str | TimeDeltaDG | None = None, strict: bool = True) -> None:
+        """Configure the snapshot scale and chaining rule."""
         self.snapshot = snapshot
         self.strict = strict
 
     def compute(self, graph: Graph) -> list[float]:
+        """Compute the reachable-pair ratio for each snapshot."""
         groups, total = snapshot_event_groups(graph, snapshot=self.snapshot)
         if total == 0:
             return []

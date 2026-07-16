@@ -34,10 +34,12 @@ class InteractingIndividuals(Metric[Graph, list[int]]):
         snapshot: str | TimeDeltaDG | None = None,
         directed: bool = False,
     ) -> None:
+        """Choose the snapshot scale and edge direction rule."""
         self.snapshot = snapshot
         self.directed = directed
 
     def compute(self, graph: Graph) -> list[int]:
+        """Count distinct active individuals in each snapshot."""
         index, total = snapshots(graph, self.snapshot)
         nodes = torch.cat([graph.edge_src.long(), graph.edge_dst.long()])
         when = torch.cat([index, index])

@@ -18,10 +18,13 @@ CATEGORY = MetricCategory.GLOBAL_METRICS
 
 
 class TemporalDegreeCentrality(Metric[Graph, list[float]]):
+    """Measure the normalized temporal degree of each node."""
+
     name = "temporal_degree_centrality"
     category = CATEGORY
 
     def compute(self, graph: Graph) -> list[float]:
+        """Compute degree centrality from all observed interactions."""
         num_nodes = int(graph.num_nodes)
         if num_nodes == 0:
             return []

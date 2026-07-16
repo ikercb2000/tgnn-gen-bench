@@ -18,7 +18,7 @@ def snapshots(
     graph: Graph,
     snapshot: str | TimeDeltaDG | None,
 ) -> tuple[Tensor, int]:
-    """Assign every edge event to a snapshot on the graph's time grid."""
+    """Assign each edge event to a snapshot on the graph time grid."""
     if graph.time_delta.is_event_ordered:
         raise ValueError(
             "snapshot metrics need a time-ordered graph: the timestamps of an "
@@ -43,7 +43,7 @@ def snapshots(
 
 
 def encode(high: Tensor, low: Tensor, base: int) -> Tensor:
-    """Pack two non-negative integer tensors into one, as high * base + low."""
+    """Pack two integer tensors into one integer code."""
     limit = torch.iinfo(torch.int64).max
     if int(high.max()) > (limit - int(low.max())) // max(base, 1):
         raise OverflowError(
@@ -53,7 +53,7 @@ def encode(high: Tensor, low: Tensor, base: int) -> Tensor:
 
 
 def pair_codes(graph: Graph, directed: bool) -> Tensor:
-    """Encode each edge event's node pair as one integer."""
+    """Encode the endpoints of each edge event into one integer."""
     src, dst = graph.edge_src.long(), graph.edge_dst.long()
     if not directed:
         src, dst = torch.minimum(src, dst), torch.maximum(src, dst)
@@ -65,7 +65,7 @@ def contact_runs(
     snapshot: str | TimeDeltaDG | None,
     directed: bool,
 ) -> tuple[Tensor, Tensor, Tensor, int]:
-    """Collapse events into per-pair runs of consecutive occupied snapshots."""
+    """Collapse events into consecutive contact runs per node pair."""
     index, total = snapshots(graph, snapshot)
     codes = pair_codes(graph, directed)
 

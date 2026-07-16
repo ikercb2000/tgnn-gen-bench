@@ -18,6 +18,8 @@ CATEGORY = MetricCategory.STRUCTURAL_METRICS
 
 
 class CommunityPersistence(Metric[Graph, list[float]]):
+    """Measure how similar communities remain across snapshots."""
+
     name = "community_persistence"
     category = CATEGORY
 
@@ -29,6 +31,7 @@ class CommunityPersistence(Metric[Graph, list[float]]):
         resolution: float = 1.0,
         seed: int = 42,
     ) -> None:
+        """Configure snapshotting and community matching settings."""
         self.snapshot = snapshot
         self.weight_index = weight_index
         self.overlap_threshold = overlap_threshold
@@ -36,6 +39,7 @@ class CommunityPersistence(Metric[Graph, list[float]]):
         self.seed = seed
 
     def compute(self, graph: Graph) -> list[float]:
+        """Compute mean community persistence per transition."""
         snapshots = build_snapshot_graphs(
             graph,
             snapshot=self.snapshot,

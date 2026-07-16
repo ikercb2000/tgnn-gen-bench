@@ -67,15 +67,13 @@ def evaluate(
     """KS distance per metric, one score per generated graph, plus its category."""
     reference = load(args.reference, args)
     evaluator = Evaluator(metrics=build_metrics(args), distance=KSDistance())
-
-    scores: dict[str, list[float]] = {}
-    category_of: dict[str, MetricCategory] = {}
+    generated_graphs = []
     for path in args.generated:
         print(f"  comparing {path.name} ...", flush=True)
-        for result in evaluator.evaluate(reference, load(path, args)):
-            scores.setdefault(result.metric_name, []).append(result.score)
-            category_of[result.metric_name] = result.category
-    return scores, category_of
+        generated_graphs.append((path.name, load(path, args)))
+
+    summary = evaluator.evaluate_many(reference, generated_graphs)
+    return summary.scores_by_metric, summary.category_of
 
 
 def main() -> None:

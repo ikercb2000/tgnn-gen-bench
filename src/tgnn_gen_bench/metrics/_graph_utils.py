@@ -18,6 +18,7 @@ from tgnn_gen_bench.graphs import Graph
 
 
 def edge_weights(graph: Graph, weight_index: int = 0) -> Tensor:
+    """Extract one edge-weight channel or default to ones."""
     if graph.edge_x is None:
         return torch.ones(graph.num_edge_events, dtype=torch.float64, device=graph.device)
 
@@ -41,6 +42,7 @@ def snapshot_event_groups(
     graph: Graph,
     snapshot: str | TimeDeltaDG | None = None,
 ) -> tuple[list[Tensor], int]:
+    """Group edge events by snapshot and return the total count."""
     if graph.num_edge_events == 0:
         return [], 0
 
@@ -76,6 +78,7 @@ def build_snapshot_graphs(
     directed: bool = False,
     weight_index: int = 0,
 ) -> list[nx.Graph]:
+    """Build one NetworkX graph per snapshot."""
     groups, total = snapshot_event_groups(graph, snapshot)
     graph_cls = nx.DiGraph if directed else nx.Graph
     snapshots = [graph_cls() for _ in range(total)]
@@ -115,6 +118,7 @@ def build_snapshot_adjacency(
     graph: Graph,
     snapshot: str | TimeDeltaDG | None = None,
 ) -> list[dict[int, Tensor]]:
+    """Build adjacency dictionaries for each undirected snapshot."""
     snapshots = build_snapshot_graphs(graph, snapshot=snapshot, directed=False)
     adjacency: list[dict[int, Tensor]] = []
     for snapshot_graph in snapshots:
@@ -132,6 +136,7 @@ def build_snapshot_adjacency(
 
 
 def _groups_from_index(index: Tensor, total: int) -> list[Tensor]:
+    """Recover stable event groups from snapshot indices."""
     order = torch.argsort(index, stable=True)
     sorted_index = index[order]
     counts = torch.bincount(sorted_index, minlength=total)

@@ -8,6 +8,8 @@ from enum import StrEnum
 
 
 class MetricCategory(StrEnum):
+    """Enumerate the metric families used across the project."""
+
     TEMPORAL_FIDELITY = "temporal_fidelity"
     GLOBAL_METRICS = "global_metrics"
     STRUCTURAL_METRICS = "structural_metrics"

@@ -17,6 +17,8 @@ CATEGORY = MetricCategory.STRUCTURAL_METRICS
 
 
 class TemporalStrengthDistribution(Metric[Graph, list[float]]):
+    """Collect weighted node degrees from every snapshot."""
+
     name = "temporal_strength_distribution"
     category = CATEGORY
 
@@ -25,10 +27,12 @@ class TemporalStrengthDistribution(Metric[Graph, list[float]]):
         snapshot: str | TimeDeltaDG | None = None,
         weight_index: int = 0,
     ) -> None:
+        """Choose the snapshot scale and edge-weight feature."""
         self.snapshot = snapshot
         self.weight_index = weight_index
 
     def compute(self, graph: Graph) -> list[float]:
+        """Compute the concatenated snapshot strength distribution."""
         values: list[float] = []
         snapshots = build_snapshot_graphs(
             graph,

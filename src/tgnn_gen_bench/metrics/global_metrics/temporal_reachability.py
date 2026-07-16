@@ -19,13 +19,17 @@ CATEGORY = MetricCategory.GLOBAL_METRICS
 
 
 class TemporalReachability(Metric[Graph, list[float]]):
+    """Measure the fraction of nodes reachable from each node."""
+
     name = "temporal_reachability"
     category = CATEGORY
 
     def __init__(self, strict: bool = True) -> None:
+        """Choose whether simultaneous events can chain together."""
         self.strict = strict
 
     def compute(self, graph: Graph) -> list[float]:
+        """Compute normalized temporal reachability per node."""
         num_nodes = int(graph.num_nodes)
         if num_nodes <= 1:
             return [0.0] * num_nodes

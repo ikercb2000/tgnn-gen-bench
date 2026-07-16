@@ -8,6 +8,7 @@ import numpy as np
 
 
 def snapshot_degree_adjusted_strengths(graph, eps: float) -> np.ndarray:
+    """Compute z-scored strengths relative to node degree."""
     nodes = list(graph.nodes())
     if not nodes:
         return np.asarray([], dtype=float)

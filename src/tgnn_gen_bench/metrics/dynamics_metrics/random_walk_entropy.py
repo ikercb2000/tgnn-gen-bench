@@ -20,6 +20,8 @@ CATEGORY = MetricCategory.DYNAMICS_METRICS
 
 
 class RandomWalkEntropy(Metric[Graph, list[float]]):
+    """Measure how dispersed temporal random walks become over time."""
+
     name = "random_walk_entropy"
     category = CATEGORY
 
@@ -32,6 +34,7 @@ class RandomWalkEntropy(Metric[Graph, list[float]]):
         stay_probability: float = 0.5,
         seed: int = 42,
     ) -> None:
+        """Configure the snapshot scale and walk simulation parameters."""
         self.snapshot = snapshot
         self.n_samples = n_samples
         self.n_walks = n_walks
@@ -40,6 +43,7 @@ class RandomWalkEntropy(Metric[Graph, list[float]]):
         self.seed = seed
 
     def compute(self, graph: Graph) -> list[float]:
+        """Compute the mean entropy curve of simulated walks."""
         if int(graph.num_nodes) <= 1:
             return [0.0] * min(self.horizon, max(int(graph.num_nodes), 1))
 

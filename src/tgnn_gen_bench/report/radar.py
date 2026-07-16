@@ -1,12 +1,4 @@
-"""Radar figures over metric scores, by category and by metric.
-
-The style guide advises a dot plot over a radar for comparing methods across
-metrics, and its reasons apply here too: enclosed area grows with the square of
-the scores, and the axis order is not determined by the data. These radars use
-its escape clause — the axis order is fixed by the caller and recorded in the
-sidecar, and the shape is one polygon rather than several overlaid. State the
-axis order in the caption of any figure produced here.
-"""
+"""Radar plots for metric similarities."""
 
 # import packages
 
@@ -87,12 +79,7 @@ def group_by_category(
     scores: Mapping[str, Sequence[float]],
     category_of: Mapping[str, MetricCategory],
 ) -> dict[MetricCategory, list[str]]:
-    """Metric names per category, categories present only.
-
-    Metrics keep the order they were registered in; that declared order is what
-    the caption refers to. Sorting here would silently substitute an
-    alphabetical one.
-    """
+    """Group metric names by category in registration order."""
     grouped: dict[MetricCategory, list[str]] = {}
     for name in scores:
         grouped.setdefault(category_of[name], []).append(name)
@@ -100,22 +87,19 @@ def group_by_category(
 
 
 def polygon_area(values: np.ndarray) -> float:
-    """Enclosed area as a fraction of the unit polygon.
-
-    Quadratic in the scores, so it exaggerates differences, and one collapsed
-    axis drags down both triangles adjacent to it. Report it as a number rather
-    than inviting the reader to compare areas by eye.
-    """
+    """Compute the normalized area enclosed by a radar polygon."""
     if len(values) < 3:
         return float("nan")
     return float(np.sum(values * np.roll(values, -1)) / len(values))
 
 
 def _ring(values: np.ndarray) -> np.ndarray:
+    """Close a polar polygon by repeating its first value."""
     return np.concatenate([values, values[:1]])
 
 
 def _radar_axes(ax, theta, labels, title, area) -> None:
+    """Apply the shared axis styling for radar plots."""
     ax.set_theta_offset(np.pi / 2)
     ax.set_theta_direction(-1)
     ax.set_xticks(theta)

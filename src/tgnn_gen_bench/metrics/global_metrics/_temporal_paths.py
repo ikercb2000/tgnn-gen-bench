@@ -18,6 +18,7 @@ def temporal_reachability_counts(
     edge_ids: Tensor | None = None,
     strict: bool = True,
 ) -> Tensor:
+    """Count how many nodes each node can reach through time."""
     num_nodes = int(graph.num_nodes)
     if num_nodes == 0:
         return torch.empty(0, dtype=torch.float64)
@@ -50,6 +51,7 @@ def temporal_closeness_values(
     edge_ids: Tensor | None = None,
     strict: bool = True,
 ) -> Tensor:
+    """Compute temporal closeness values from time-respecting paths."""
     num_nodes = int(graph.num_nodes)
     if num_nodes == 0:
         return torch.empty(0, dtype=torch.float64)
@@ -81,6 +83,7 @@ def temporal_closeness_values(
 
 
 def _selected_edges(graph: Graph, edge_ids: Tensor | None) -> tuple[Tensor, Tensor, Tensor]:
+    """Select the requested edges or all graph edges."""
     if edge_ids is None:
         return graph.edge_src.long(), graph.edge_dst.long(), graph.edge_time.long()
     return (
@@ -91,6 +94,7 @@ def _selected_edges(graph: Graph, edge_ids: Tensor | None) -> tuple[Tensor, Tens
 
 
 def _time_groups(time: Tensor) -> list[Tensor]:
+    """Split sorted timestamps into equal-time groups."""
     is_new_group = torch.cat([time.new_ones(1, dtype=torch.bool), time[1:] != time[:-1]])
     boundaries = torch.nonzero(is_new_group).flatten()
     groups: list[Tensor] = []

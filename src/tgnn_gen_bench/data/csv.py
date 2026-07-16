@@ -20,12 +20,7 @@ def from_csv(
     time_unit: str | TimeDeltaDG = "s",
     device: str | torch.device = "cpu",
 ) -> Graph:
-    """Load a temporal graph from an edge list.
-
-    The time unit must be time-ordered: snapshot metrics read the graph's time
-    grid off start_time/end_time/time_delta, and an event-ordered graph's
-    timestamps are an ordering rather than a grid.
-    """
+    """Load a time-ordered temporal graph from a CSV edge list."""
     time_delta = TimeDeltaDG(time_unit) if isinstance(time_unit, str) else time_unit
     if time_delta.is_event_ordered:
         raise ValueError(

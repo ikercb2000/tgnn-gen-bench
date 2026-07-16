@@ -31,10 +31,12 @@ class NewInteractions(Metric[Graph, list[int]]):
         snapshot: str | TimeDeltaDG | None = None,
         directed: bool = False,
     ) -> None:
+        """Choose the snapshot scale and edge direction rule."""
         self.snapshot = snapshot
         self.directed = directed
 
     def compute(self, graph: Graph) -> list[int]:
+        """Count contact runs that start in each snapshot."""
         when, _, _, total = contact_runs(graph, self.snapshot, self.directed)
         return torch.bincount(when, minlength=total).tolist()
 
