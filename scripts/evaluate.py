@@ -40,7 +40,7 @@ from tgnn_gen_bench.metrics.temporal_fidelity import (
     NewInteractions,
     NumberOfInteractions,
 )
-from tgnn_gen_bench.report import radar
+from tgnn_gen_bench.report import radar_plotter
 from tgnn_gen_bench.report.style import DPI, DRAFT_DPI, apply_style
 
 
@@ -63,8 +63,8 @@ def load(path: Path, args: argparse.Namespace):
 
 def evaluate(
     args: argparse.Namespace,
-) -> tuple[dict[str, list[float]], dict[str, MetricCategory]]:
-    """KS distance per metric, one score per generated graph, plus its category."""
+) -> tuple:
+    """Run the evaluator on the reference and generated graphs."""
     reference = load(args.reference, args)
     evaluator = Evaluator(metrics=build_metrics(args), distance=KSDistance())
     generated_graphs = []
@@ -73,7 +73,7 @@ def evaluate(
         generated_graphs.append((path.name, load(path, args)))
 
     summary = evaluator.evaluate_many(reference, generated_graphs)
-    return summary.scores_by_metric, summary.category_of
+    return summary
 
 
 def main() -> None:
@@ -101,8 +101,10 @@ def main() -> None:
 
     print(f"reference: {args.reference}")
     print(f"generated: {len(args.generated)} graph(s)")
-    scores, category_of = evaluate(args)
-    grouped = radar.group_by_category(scores, category_of)
+    summary = evaluate(args)
+    grouped = radar_plotter.grouped_metrics(summary)
+    scores = summary.scores_by_metric
+    category_of = summary.category_of
 
     print()
     print(f"{'category':22s} {'metric':24s} {'KS mean':>9s} {'KS std':>8s}")
@@ -116,16 +118,20 @@ def main() -> None:
         print(f"note: only {len(grouped)} categor{'y' if len(grouped) == 1 else 'ies'} "
               f"populated; a radar needs at least 3 axes to enclose an area.")
 
-    similarity = {n: 1.0 - float(np.mean(v)) for n, v in scores.items()}
-    spread = {n: float(np.std(v)) for n, v in scores.items()}
-    per_category = {
-        c: float(np.mean([similarity[n] for n in names]))
-        for c, names in grouped.items()
-    }
+    similarity = radar_plotter.metric_similarity(summary)
+    spread = radar_plotter.metric_spread(summary)
 
     args.out.parent.mkdir(parents=True, exist_ok=True)
     dpi = DRAFT_DPI if args.draft else DPI
     tex = apply_style(usetex=not args.draft, dpi=dpi)
+    plot_data = radar_plotter.plot(
+        summary,
+        args.out,
+        tex,
+        dpi=dpi,
+        band=len(args.generated) > 1,
+        graph_labels={path.name: path.stem for path in args.generated},
+    )
 
     sidecar = {
         "script": Path(__file__).name,
@@ -133,14 +139,13 @@ def main() -> None:
         "generated": [str(pth) for pth in args.generated],
         "n_generated": len(args.generated),
         "snapshot": args.snapshot or "native time_delta",
-        "distance": "ks",
+        "distance": summary.distance_name,
         "ks_per_graph": scores,
         "category_of": category_of,
-        "by_category": radar.by_category(
-            per_category, f"{args.out}_categories", tex, dpi=dpi),
-        "by_metric": radar.by_metric(
-            similarity, spread, grouped, f"{args.out}_metrics", tex, dpi=dpi,
-            band=len(args.generated) > 1),
+        "grouped_metrics": grouped,
+        "metric_similarity": similarity,
+        "metric_spread": spread,
+        "plots": plot_data,
     }
     with open(f"{args.out}.plotdata.json", "w") as f:
         json.dump(sidecar, f, indent=2)
