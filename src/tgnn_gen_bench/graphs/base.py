@@ -10,13 +10,15 @@ from torch import Tensor
 from tgm import DGraph, TimeDeltaDG
 from tgm.data import DGData
 
-# 
+# rename of objects
+
 Node = int
 Graph = DGraph
 GraphData = DGData
 TemporalGraph = DGraph
 TemporalGraphData = DGData
 
+# graph components
 
 @dataclass(frozen=True, slots=True)
 class TemporalEdge:
