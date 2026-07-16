@@ -1,3 +1,6 @@
+# Generated figures (default --out target of scripts/evaluate.py)
+figures/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
