@@ -12,6 +12,13 @@ from tgm.data import DGData
 
 # rename of objects
 
+# Graphs default to a time-ordered granularity, not event-ordered ('r'). The
+# benchmark is built on snapshots: metrics read the layer grid off
+# start_time/end_time/time_delta, and TGM refuses both time-ordered batching and
+# DGData.discretize on an event-ordered graph. An event-ordered graph's
+# timestamps are an ordering, so a snapshot is undefined on one. Pass
+# time_delta='r' explicitly if that is genuinely what the data is.
+
 Node = int
 Graph = DGraph
 GraphData = DGData
@@ -39,7 +46,7 @@ def from_raw(
     node_y_nids: Tensor | None = None,
     node_y: Tensor | None = None,
     static_node_x: Tensor | None = None,
-    time_delta: TimeDeltaDG | str = "r",
+    time_delta: TimeDeltaDG | str = "s",
     edge_type: Tensor | None = None,
     node_type: Tensor | None = None,
     device: str | torch.device = "cpu",
@@ -66,7 +73,7 @@ def from_temporal_edges(
     edges: Sequence[TemporalEdge],
     *,
     edge_feature_keys: Sequence[str] | None = None,
-    time_delta: TimeDeltaDG | str = "r",
+    time_delta: TimeDeltaDG | str = "s",
     device: str | torch.device = "cpu",
 ) -> DGraph:
     if not edges:
