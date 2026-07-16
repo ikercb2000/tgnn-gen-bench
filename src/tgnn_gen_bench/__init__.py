@@ -1,3 +1,5 @@
+# import modules
+
 from tgnn_gen_bench.graphs import (
     DGData,
     DGraph,
@@ -10,6 +12,8 @@ from tgnn_gen_bench.graphs import (
     from_raw,
     from_temporal_edges,
 )
+
+# public exports
 
 __all__ = [
     "DGData",
