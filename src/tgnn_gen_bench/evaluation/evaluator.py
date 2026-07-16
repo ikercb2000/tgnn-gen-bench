@@ -5,7 +5,7 @@ from typing import Sequence
 # import modules
 
 from tgnn_gen_bench.evaluation.results import MetricResult
-from tgnn_gen_bench.graphs import Graph
+from tgnn_gen_bench.graphs.base import Graph
 from tgnn_gen_bench.metrics.base import Metric
 
 # evaluation pipeline class
