@@ -1,0 +1,50 @@
+# Thiers 2012 experiment configuration.
+#
+# Dataset used:
+#   data/thiers_2012.csv
+#
+# This file has 45,047 temporal edges and 11,273 distinct timestamps.
+# In this experiment we partition the timestamps into 4 contiguous temporal graphs:
+#
+#   graph_0: timestamps 1353303380 .. 1353409840, 2,818 time points, 13,725 edges
+#   graph_1: timestamps 1353409860 .. 1353583880, 2,818 time points,  9,264 edges
+#   graph_2: timestamps 1353583900 .. 1353916460, 2,818 time points, 11,729 edges
+#   graph_3: timestamps 1353916480 .. 1354032880, 2,819 time points, 10,329 edges
+#
+# How to specify comparisons:
+# - historical_graph must be one of: graph_0, graph_1, graph_2, graph_3
+# - generated_graphs must list one or more graph ids from the same set
+# - each generated graph is compared pairwise against the fixed historical graph
+# - every pair produces its own output folder and its own radar plots
+
+dataset:
+  path: data/thiers_2012.csv
+  delimiter: "\t"
+  time_unit: "s"
+
+graphs:
+  partition:
+    mode: equal_timestamp_windows
+    count: 4
+  historical_graph: graph_0
+  generated_graphs:
+    - graph_1
+    - graph_2
+    - graph_3
+
+metrics:
+  snapshot: "h"
+  directed: false
+  random_walk:
+    n_samples: 4
+    n_walks: 128
+    horizon: 8
+    seed: 7
+  downstream_tasks:
+    seed: 7
+
+output:
+  root_dir: examples/outputs/thiers_yaml_experiment
+  base_name_prefix: thiers_2012
+  tex: false
+  dpi: 300

@@ -10,7 +10,14 @@ import numpy as np
 
 from tgnn_gen_bench.metrics.categories import MetricCategory
 from tgnn_gen_bench.report._radar_config import CATEGORY_ORDER
-from tgnn_gen_bench.report.style import FONT_TICK, GRID_ALPHA, GRID_LINESTYLE, GRID_LW, LIGHT_GREY
+from tgnn_gen_bench.report.style import (
+    DARK_GREY,
+    FONT_TICK,
+    GRID_ALPHA,
+    GRID_LINESTYLE,
+    GRID_LW,
+    LIGHT_GREY,
+)
 
 # helpers
 
@@ -38,7 +45,7 @@ def ring(values: np.ndarray) -> np.ndarray:
     return np.concatenate([values, values[:1]])
 
 
-def radar_axes(ax, theta, labels, title, area) -> None:
+def radar_axes(ax, theta, labels, title, area, subtitle: str | None = None) -> None:
     """Apply the shared axis styling for radar plots."""
     ax.set_theta_offset(np.pi / 2)
     ax.set_theta_direction(-1)
@@ -55,7 +62,29 @@ def radar_axes(ax, theta, labels, title, area) -> None:
     ax.set_axisbelow(True)
     ax.spines["polar"].set_color(LIGHT_GREY)
     ax.spines["polar"].set_linewidth(0.8)
-    ax.set_title(f"{title}\narea {area:.2f}", pad=14)
+    ax.set_facecolor("#FBFBF8")
+    ax.set_title(title, pad=18, color=DARK_GREY)
+    if subtitle is not None:
+        ax.text(
+            0.5,
+            1.10,
+            subtitle,
+            transform=ax.transAxes,
+            ha="center",
+            va="bottom",
+            fontsize=FONT_TICK,
+            color="#666666",
+        )
+    ax.text(
+        0.5,
+        1.03,
+        f"Area {area:.2f}",
+        transform=ax.transAxes,
+        ha="center",
+        va="bottom",
+        fontsize=FONT_TICK,
+        color="#666666",
+    )
 
 
 def label(name: str) -> str:
@@ -66,18 +95,10 @@ def label(name: str) -> str:
     return f"{first}\n{' '.join(words[half:])}" if words[half:] else first
 
 
-def title(base_title: str, context_label: str | None) -> str:
-    """Append an optional context label to a plot title."""
-    if context_label is None:
-        return base_title
-    return f"{base_title}\n{context_label}"
-
-
 __all__ = [
     "group_by_category",
     "label",
     "polygon_area",
     "radar_axes",
     "ring",
-    "title",
 ]

@@ -1,0 +1,139 @@
+{
+  "historical_graph": "graph_0",
+  "generated_graph": "graph_1",
+  "plot_dir": "C:\\Users\\Iker\\Desktop\\Algoritmos_Perrotes\\tgnn-gen-bench\\examples\\outputs\\thiers_yaml_experiment\\thiers_2012_graph_0_vs_graph_1\\plots",
+  "plot_base": "C:\\Users\\Iker\\Desktop\\Algoritmos_Perrotes\\tgnn-gen-bench\\examples\\outputs\\thiers_yaml_experiment\\thiers_2012_graph_0_vs_graph_1\\plots\\thiers_2012_graph_0_vs_graph_1",
+  "distance_name": "ks",
+  "scores_by_metric": {
+    "number_of_interactions": [
+      0.32176870748299313
+    ],
+    "interacting_individuals": [
+      0.28095238095238095
+    ],
+    "temporal_degree_centrality": [
+      0.007000538502961784
+    ],
+    "temporal_reachability": [
+      0.005923532579429236
+    ],
+    "temporal_degree_distribution": [
+      0.009360426992552573
+    ],
+    "random_walk_entropy": [
+      1.0
+    ],
+    "temporal_link_prediction_log_loss": [
+      0.1132743362831859
+    ],
+    "temporal_link_prediction_roc_auc": [
+      0.0513274336283186
+    ]
+  },
+  "category_of": {
+    "number_of_interactions": "temporal_fidelity",
+    "interacting_individuals": "temporal_fidelity",
+    "temporal_degree_centrality": "global_metrics",
+    "temporal_reachability": "global_metrics",
+    "temporal_degree_distribution": "structural_metrics",
+    "random_walk_entropy": "dynamics_metrics",
+    "temporal_link_prediction_log_loss": "downstream_tasks",
+    "temporal_link_prediction_roc_auc": "downstream_tasks"
+  },
+  "plot_data": {
+    "grouped_metrics": {
+      "temporal_fidelity": [
+        "number_of_interactions",
+        "interacting_individuals"
+      ],
+      "global_metrics": [
+        "temporal_degree_centrality",
+        "temporal_reachability"
+      ],
+      "structural_metrics": [
+        "temporal_degree_distribution"
+      ],
+      "dynamics_metrics": [
+        "random_walk_entropy"
+      ],
+      "downstream_tasks": [
+        "temporal_link_prediction_log_loss",
+        "temporal_link_prediction_roc_auc"
+      ]
+    },
+    "graph_names": [
+      "graph_1"
+    ],
+    "distance_name": "ks",
+    "by_category": {
+      "axis_order": [
+        "temporal_fidelity",
+        "global_metrics",
+        "structural_metrics",
+        "dynamics_metrics",
+        "downstream_tasks"
+      ],
+      "mean_similarity": [
+        0.698639455782313,
+        0.9935379644588045,
+        0.9906395730074474,
+        0.0,
+        0.9176991150442477
+      ],
+      "area": 0.46390073159462963,
+      "context_label": "graph_0 vs graph_1",
+      "distance_name": "ks",
+      "graph_names": [
+        "graph_1"
+      ]
+    },
+    "by_metric": {
+      "axis_order": [
+        "number_of_interactions",
+        "interacting_individuals",
+        "temporal_degree_centrality",
+        "temporal_reachability",
+        "temporal_degree_distribution",
+        "random_walk_entropy",
+        "temporal_link_prediction_log_loss",
+        "temporal_link_prediction_roc_auc"
+      ],
+      "categories": [
+        "temporal_fidelity",
+        "temporal_fidelity",
+        "global_metrics",
+        "global_metrics",
+        "structural_metrics",
+        "dynamics_metrics",
+        "downstream_tasks",
+        "downstream_tasks"
+      ],
+      "mean_similarity": [
+        0.6782312925170069,
+        0.719047619047619,
+        0.9929994614970382,
+        0.9940764674205708,
+        0.9906395730074474,
+        0.0,
+        0.8867256637168142,
+        0.9486725663716814
+      ],
+      "std": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "area": 0.5822768888177852,
+      "context_label": "graph_0 vs graph_1",
+      "distance_name": "ks",
+      "graph_names": [
+        "graph_1"
+      ]
+    }
+  }
+}

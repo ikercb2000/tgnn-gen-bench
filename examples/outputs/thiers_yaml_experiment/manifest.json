@@ -1,0 +1,37 @@
+{
+  "config": "C:\\Users\\Iker\\Desktop\\Algoritmos_Perrotes\\tgnn-gen-bench\\examples\\thiers_yaml_experiment\\experiment.yaml",
+  "dataset": "data/thiers_2012.csv",
+  "historical_graph": "graph_0",
+  "generated_graphs": [
+    "graph_1",
+    "graph_2",
+    "graph_3"
+  ],
+  "comparisons": [
+    {
+      "name": "thiers_2012_graph_0_vs_graph_1",
+      "output_dir": "C:\\Users\\Iker\\Desktop\\Algoritmos_Perrotes\\tgnn-gen-bench\\examples\\outputs\\thiers_yaml_experiment\\thiers_2012_graph_0_vs_graph_1",
+      "plot_dir": "C:\\Users\\Iker\\Desktop\\Algoritmos_Perrotes\\tgnn-gen-bench\\examples\\outputs\\thiers_yaml_experiment\\thiers_2012_graph_0_vs_graph_1\\plots",
+      "category_plot": "C:\\Users\\Iker\\Desktop\\Algoritmos_Perrotes\\tgnn-gen-bench\\examples\\outputs\\thiers_yaml_experiment\\thiers_2012_graph_0_vs_graph_1\\plots\\thiers_2012_graph_0_vs_graph_1_categories.png",
+      "metric_plot": "C:\\Users\\Iker\\Desktop\\Algoritmos_Perrotes\\tgnn-gen-bench\\examples\\outputs\\thiers_yaml_experiment\\thiers_2012_graph_0_vs_graph_1\\plots\\thiers_2012_graph_0_vs_graph_1_metrics.png",
+      "summary": "C:\\Users\\Iker\\Desktop\\Algoritmos_Perrotes\\tgnn-gen-bench\\examples\\outputs\\thiers_yaml_experiment\\thiers_2012_graph_0_vs_graph_1\\thiers_2012_graph_0_vs_graph_1.summary.json"
+    },
+    {
+      "name": "thiers_2012_graph_0_vs_graph_2",
+      "output_dir": "C:\\Users\\Iker\\Desktop\\Algoritmos_Perrotes\\tgnn-gen-bench\\examples\\outputs\\thiers_yaml_experiment\\thiers_2012_graph_0_vs_graph_2",
+      "plot_dir": "C:\\Users\\Iker\\Desktop\\Algoritmos_Perrotes\\tgnn-gen-bench\\examples\\outputs\\thiers_yaml_experiment\\thiers_2012_graph_0_vs_graph_2\\plots",
+      "category_plot": "C:\\Users\\Iker\\Desktop\\Algoritmos_Perrotes\\tgnn-gen-bench\\examples\\outputs\\thiers_yaml_experiment\\thiers_2012_graph_0_vs_graph_2\\plots\\thiers_2012_graph_0_vs_graph_2_categories.png",
+      "metric_plot": "C:\\Users\\Iker\\Desktop\\Algoritmos_Perrotes\\tgnn-gen-bench\\examples\\outputs\\thiers_yaml_experiment\\thiers_2012_graph_0_vs_graph_2\\plots\\thiers_2012_graph_0_vs_graph_2_metrics.png",
+      "summary": "C:\\Users\\Iker\\Desktop\\Algoritmos_Perrotes\\tgnn-gen-bench\\examples\\outputs\\thiers_yaml_experiment\\thiers_2012_graph_0_vs_graph_2\\thiers_2012_graph_0_vs_graph_2.summary.json"
+    },
+    {
+      "name": "thiers_2012_graph_0_vs_graph_3",
+      "output_dir": "C:\\Users\\Iker\\Desktop\\Algoritmos_Perrotes\\tgnn-gen-bench\\examples\\outputs\\thiers_yaml_experiment\\thiers_2012_graph_0_vs_graph_3",
+      "plot_dir": "C:\\Users\\Iker\\Desktop\\Algoritmos_Perrotes\\tgnn-gen-bench\\examples\\outputs\\thiers_yaml_experiment\\thiers_2012_graph_0_vs_graph_3\\plots",
+      "category_plot": "C:\\Users\\Iker\\Desktop\\Algoritmos_Perrotes\\tgnn-gen-bench\\examples\\outputs\\thiers_yaml_experiment\\thiers_2012_graph_0_vs_graph_3\\plots\\thiers_2012_graph_0_vs_graph_3_categories.png",
+      "metric_plot": "C:\\Users\\Iker\\Desktop\\Algoritmos_Perrotes\\tgnn-gen-bench\\examples\\outputs\\thiers_yaml_experiment\\thiers_2012_graph_0_vs_graph_3\\plots\\thiers_2012_graph_0_vs_graph_3_metrics.png",
+      "summary": "C:\\Users\\Iker\\Desktop\\Algoritmos_Perrotes\\tgnn-gen-bench\\examples\\outputs\\thiers_yaml_experiment\\thiers_2012_graph_0_vs_graph_3\\thiers_2012_graph_0_vs_graph_3.summary.json"
+    }
+  ],
+  "combined_category_plot": "C:\\Users\\Iker\\Desktop\\Algoritmos_Perrotes\\tgnn-gen-bench\\examples\\outputs\\thiers_yaml_experiment\\combined_category_radars.png"
+}

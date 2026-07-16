@@ -3,6 +3,7 @@
 # import packages
 
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 # constants
 
@@ -59,12 +60,20 @@ ERRORBAR_LW = 1.5
 BASE_RC = {
     "axes.labelsize": FONT_LABEL,
     "axes.titlesize": FONT_TITLE,
+    "axes.titleweight": "semibold",
     "xtick.labelsize": FONT_TICK,
     "ytick.labelsize": FONT_TICK,
     "legend.fontsize": FONT_LEGEND,
     "axes.spines.top": False,
     "axes.spines.right": False,
     "axes.linewidth": 0.8,
+    "axes.facecolor": "#FBFBF8",
+    "figure.facecolor": "white",
+    "savefig.facecolor": "white",
+    "axes.labelcolor": DARK_GREY,
+    "text.color": DARK_GREY,
+    "xtick.color": "#555555",
+    "ytick.color": "#555555",
     "xtick.major.width": 0.8,
     "ytick.major.width": 0.8,
     "xtick.major.size": 4,
@@ -85,6 +94,12 @@ USETEX_RC = {
 
 def apply_style(usetex: bool = True, dpi: int = DPI) -> bool:
     """Apply plotting defaults and report whether LaTeX is active."""
+    sns.set_theme(
+        context="paper",
+        style="whitegrid",
+        palette="deep",
+        font="DejaVu Sans",
+    )
     plt.rcParams.update(BASE_RC)
     plt.rcParams["figure.dpi"] = dpi
     if not usetex:

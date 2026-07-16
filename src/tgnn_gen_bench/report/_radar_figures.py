@@ -17,7 +17,7 @@ from tgnn_gen_bench.report._radar_config import (
     CATEGORY_MARKER,
     CATEGORY_ORDER,
 )
-from tgnn_gen_bench.report._radar_helpers import label, polygon_area, radar_axes, ring, title
+from tgnn_gen_bench.report._radar_helpers import label, polygon_area, radar_axes, ring
 from tgnn_gen_bench.report.style import (
     DARK_GREY,
     DPI,
@@ -70,8 +70,9 @@ def by_category(
         ax,
         theta,
         [CATEGORY_LABEL.get(category, category) for category in categories],
-        title(r"By category ($1-\mathrm{KS}$)" if tex else "By category (1 - KS)", context_label),
+        r"Category Similarity ($1-\mathrm{KS}$)" if tex else "Category Similarity (1 - KS)",
         area,
+        subtitle=context_label,
     )
     save(fig, out, dpi=dpi)
     plt.close(fig)
@@ -136,8 +137,9 @@ def by_metric(
         ax,
         theta,
         [label(name) for name in names],
-        title(r"By metric ($1-\mathrm{KS}$)" if tex else "By metric (1 - KS)", context_label),
+        r"Metric Similarity ($1-\mathrm{KS}$)" if tex else "Metric Similarity (1 - KS)",
         area,
+        subtitle=context_label,
     )
     handles = [
         Line2D(
