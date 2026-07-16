@@ -18,6 +18,7 @@ from matplotlib.lines import Line2D
 
 # import modules
 
+from tgnn_gen_bench.metrics.categories import MetricCategory
 from tgnn_gen_bench.report.style import (
     DPI,
     DARK_GREY,
@@ -43,47 +44,56 @@ from tgnn_gen_bench.report.style import (
 # categories
 
 CATEGORY_ORDER = [
-    "temporal_fidelity",
-    "structural_fidelity",
-    "dynamics",
-    "downstream_tasks",
+    MetricCategory.TEMPORAL_FIDELITY,
+    MetricCategory.GLOBAL_METRICS,
+    MetricCategory.STRUCTURAL_METRICS,
+    MetricCategory.DYNAMICS_METRICS,
+    MetricCategory.DOWNSTREAM_TASKS,
+    MetricCategory.DYNAMICS,
 ]
 
 CATEGORY_LABEL = {
-    "temporal_fidelity": "Temporal\nfidelity",
-    "structural_fidelity": "Structural\nfidelity",
-    "dynamics": "Dynamical\nprocesses",
-    "downstream_tasks": "Downstream\ntask",
+    MetricCategory.TEMPORAL_FIDELITY: "Temporal\nfidelity",
+    MetricCategory.GLOBAL_METRICS: "Global\nmetrics",
+    MetricCategory.STRUCTURAL_METRICS: "Structural\nmetrics",
+    MetricCategory.DYNAMICS_METRICS: "Dynamical\nmetrics",
+    MetricCategory.DYNAMICS: "Dynamical\nprocesses",
+    MetricCategory.DOWNSTREAM_TASKS: "Downstream\ntask",
 }
 
 # Colour is role-positional; category is also carried by marker shape, so it is
 # never encoded by colour alone.
 CATEGORY_COLOUR = {
-    "temporal_fidelity": PRIMARY,
-    "structural_fidelity": SECONDARY,
-    "dynamics": TERTIARY,
-    "downstream_tasks": FOURTH,
+    MetricCategory.TEMPORAL_FIDELITY: PRIMARY,
+    MetricCategory.GLOBAL_METRICS: SECONDARY,
+    MetricCategory.STRUCTURAL_METRICS: TERTIARY,
+    MetricCategory.DYNAMICS_METRICS: FOURTH,
+    MetricCategory.DYNAMICS: TERTIARY,
+    MetricCategory.DOWNSTREAM_TASKS: PRIMARY,
 }
 CATEGORY_MARKER = {
-    "temporal_fidelity": "o",
-    "structural_fidelity": "s",
-    "dynamics": "D",
-    "downstream_tasks": "^",
+    MetricCategory.TEMPORAL_FIDELITY: "o",
+    MetricCategory.GLOBAL_METRICS: "s",
+    MetricCategory.STRUCTURAL_METRICS: "D",
+    MetricCategory.DYNAMICS_METRICS: "^",
+    MetricCategory.DYNAMICS: "D",
+    MetricCategory.DOWNSTREAM_TASKS: "P",
 }
 
 # helpers
 
 
 def group_by_category(
-    scores: Mapping[str, Sequence[float]], category_of: Mapping[str, str]
-) -> dict[str, list[str]]:
+    scores: Mapping[str, Sequence[float]],
+    category_of: Mapping[str, MetricCategory],
+) -> dict[MetricCategory, list[str]]:
     """Metric names per category, categories present only.
 
     Metrics keep the order they were registered in; that declared order is what
     the caption refers to. Sorting here would silently substitute an
     alphabetical one.
     """
-    grouped: dict[str, list[str]] = {}
+    grouped: dict[MetricCategory, list[str]] = {}
     for name in scores:
         grouped.setdefault(category_of[name], []).append(name)
     return {c: grouped[c] for c in CATEGORY_ORDER if c in grouped}
@@ -128,7 +138,9 @@ def _radar_axes(ax, theta, labels, title, area) -> None:
 # figures
 
 
-def by_category(similarity: Mapping[str, float], out, tex: bool, dpi: int = DPI) -> dict:
+def by_category(
+    similarity: Mapping[MetricCategory, float], out, tex: bool, dpi: int = DPI
+) -> dict:
     """One axis per category, in CATEGORY_ORDER."""
     cats = [c for c in CATEGORY_ORDER if c in similarity]
     mean = np.array([similarity[c] for c in cats])

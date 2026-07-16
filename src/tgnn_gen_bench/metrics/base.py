@@ -6,6 +6,7 @@ from typing import Generic, TypeVar
 # import modules
 
 from tgnn_gen_bench.graphs import Graph
+from tgnn_gen_bench.metrics.categories import MetricCategory
 
 # generic variable type
 
@@ -17,7 +18,7 @@ OutputT = TypeVar("OutputT")
 class Metric(ABC, Generic[GraphT, OutputT]):
 
     name: str
-    category: str
+    category: MetricCategory
 
     @abstractmethod
     def compute(self, graph: GraphT) -> OutputT:

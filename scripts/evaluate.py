@@ -33,6 +33,7 @@ from tgm import TimeDeltaDG
 from tgnn_gen_bench.data import from_csv
 from tgnn_gen_bench.distances import KSDistance
 from tgnn_gen_bench.evaluation.evaluator import Evaluator
+from tgnn_gen_bench.metrics.categories import MetricCategory
 from tgnn_gen_bench.metrics.temporal_fidelity import (
     DurationOfContacts,
     InteractingIndividuals,
@@ -60,13 +61,15 @@ def load(path: Path, args: argparse.Namespace):
                     device=args.device)
 
 
-def evaluate(args: argparse.Namespace) -> tuple[dict[str, list[float]], dict[str, str]]:
+def evaluate(
+    args: argparse.Namespace,
+) -> tuple[dict[str, list[float]], dict[str, MetricCategory]]:
     """KS distance per metric, one score per generated graph, plus its category."""
     reference = load(args.reference, args)
     evaluator = Evaluator(metrics=build_metrics(args), distance=KSDistance())
 
     scores: dict[str, list[float]] = {}
-    category_of: dict[str, str] = {}
+    category_of: dict[str, MetricCategory] = {}
     for path in args.generated:
         print(f"  comparing {path.name} ...", flush=True)
         for result in evaluator.evaluate(reference, load(path, args)):
