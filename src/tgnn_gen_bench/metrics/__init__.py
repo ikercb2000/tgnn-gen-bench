@@ -1,5 +1,9 @@
 from tgnn_gen_bench.metrics.base import Metric
 from tgnn_gen_bench.metrics.categories import MetricCategory
+from tgnn_gen_bench.metrics.downstream_tasks import (
+    TemporalLinkPredictionLogLoss,
+    TemporalLinkPredictionRocAuc,
+)
 from tgnn_gen_bench.metrics.dynamics_metrics import RandomWalkEntropy
 from tgnn_gen_bench.metrics.global_metrics import (
     TemporalClosenessCentrality,
@@ -37,6 +41,8 @@ __all__ = [
     "TemporalClosenessCentrality",
     "TemporalDegreeCentrality",
     "TemporalDegreeDistribution",
+    "TemporalLinkPredictionLogLoss",
+    "TemporalLinkPredictionRocAuc",
     "TemporalReachability",
     "TemporalStrengthDistribution",
     "WindowedReachability",

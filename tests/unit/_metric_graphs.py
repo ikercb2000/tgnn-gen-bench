@@ -37,3 +37,27 @@ def interaction_graph():
         ],
         time_delta="s",
     )
+
+
+def downstream_graph():
+    return from_temporal_edges(
+        [
+            TemporalEdge(source=0, target=1, timestamp=1),
+            TemporalEdge(source=2, target=3, timestamp=1),
+            TemporalEdge(source=0, target=2, timestamp=2),
+            TemporalEdge(source=1, target=3, timestamp=2),
+            TemporalEdge(source=0, target=1, timestamp=3),
+            TemporalEdge(source=3, target=2, timestamp=3),
+            TemporalEdge(source=1, target=2, timestamp=4),
+            TemporalEdge(source=2, target=0, timestamp=4),
+            TemporalEdge(source=0, target=3, timestamp=5),
+            TemporalEdge(source=1, target=0, timestamp=5),
+            TemporalEdge(source=2, target=1, timestamp=6),
+            TemporalEdge(source=3, target=0, timestamp=6),
+            TemporalEdge(source=0, target=2, timestamp=7),
+            TemporalEdge(source=3, target=1, timestamp=7),
+            TemporalEdge(source=1, target=3, timestamp=8),
+            TemporalEdge(source=2, target=0, timestamp=8),
+        ],
+        time_delta="s",
+    )
